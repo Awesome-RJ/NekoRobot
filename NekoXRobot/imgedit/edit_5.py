@@ -64,7 +64,7 @@ async def normalglitch_1(client, message):
 
     except Exception as e:
 
-        print("normalglitch_1-error - " + str(e))
+        print(f"normalglitch_1-error - {str(e)}")
 
         if "USER_IS_BLOCKED" in str(e):
 
@@ -142,7 +142,7 @@ async def normalglitch_2(client, message):
 
     except Exception as e:
 
-        print("normalglitch_2-error - " + str(e))
+        print(f"normalglitch_2-error - {str(e)}")
 
         if "USER_IS_BLOCKED" in str(e):
 
@@ -220,7 +220,7 @@ async def normalglitch_3(client, message):
 
     except Exception as e:
 
-        print("normalglitch_3-error - " + str(e))
+        print(f"normalglitch_3-error - {str(e)}")
 
         if "USER_IS_BLOCKED" in str(e):
 
@@ -298,7 +298,7 @@ async def normalglitch_4(client, message):
 
     except Exception as e:
 
-        print("normalglitch_4-error - " + str(e))
+        print(f"normalglitch_4-error - {str(e)}")
 
         if "USER_IS_BLOCKED" in str(e):
 
@@ -376,7 +376,7 @@ async def normalglitch_5(client, message):
 
     except Exception as e:
 
-        print("normalglitch_5-error - " + str(e))
+        print(f"normalglitch_5-error - {str(e)}")
 
         if "USER_IS_BLOCKED" in str(e):
 
@@ -454,7 +454,7 @@ async def scanlineglitch_1(client, message):
 
     except Exception as e:
 
-        print("scanlineglitch_1-error - " + str(e))
+        print(f"scanlineglitch_1-error - {str(e)}")
 
         if "USER_IS_BLOCKED" in str(e):
 
@@ -532,7 +532,7 @@ async def scanlineglitch_2(client, message):
 
     except Exception as e:
 
-        print("scanlineglitch_2-error - " + str(e))
+        print(f"scanlineglitch_2-error - {str(e)}")
 
         if "USER_IS_BLOCKED" in str(e):
 
@@ -610,7 +610,7 @@ async def scanlineglitch_3(client, message):
 
     except Exception as e:
 
-        print("scanlineglitch_3-error - " + str(e))
+        print(f"scanlineglitch_3-error - {str(e)}")
 
         if "USER_IS_BLOCKED" in str(e):
 
@@ -688,7 +688,7 @@ async def scanlineglitch_4(client, message):
 
     except Exception as e:
 
-        print("scanlineglitch_4-error - " + str(e))
+        print(f"scanlineglitch_4-error - {str(e)}")
 
         if "USER_IS_BLOCKED" in str(e):
 
@@ -766,7 +766,7 @@ async def scanlineglitch_5(client, message):
 
     except Exception as e:
 
-        print("scanlineglitch_5-error - " + str(e))
+        print(f"scanlineglitch_5-error - {str(e)}")
 
         if "USER_IS_BLOCKED" in str(e):
 

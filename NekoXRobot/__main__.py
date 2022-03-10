@@ -31,10 +31,7 @@ def get_readable_time(seconds: int) -> str:
 
     while count < 4:
         count += 1
-        if count < 3:
-            remainder, result = divmod(seconds, 60)
-        else:
-            remainder, result = divmod(seconds, 24)
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
         if seconds == 0 and remainder == 0:
             break
         time_list.append(int(result))
@@ -43,7 +40,7 @@ def get_readable_time(seconds: int) -> str:
     for x in range(len(time_list)):
         time_list[x] = str(time_list[x]) + time_suffix_list[x]
     if len(time_list) == 4:
-        ping_time += time_list.pop() + ", "
+        ping_time += f'{time_list.pop()}, '
 
     time_list.reverse()
     ping_time += ":".join(time_list)
@@ -64,27 +61,31 @@ PM_START_TEXT = """
 
 buttons = [
     [
-                        InlineKeyboardButton(
-                            text="Add Me to your groups🎉",
-                            url="t.me/NekoXRobot?startgroup=true"),
-                    ],
-                   [
-                       InlineKeyboardButton(text="Help🔐", callback_data="help_back"),
-                       InlineKeyboardButton(text="Bot Support🎊", url="https://t.me/NekoXsupport"),
-                       InlineKeyboardButton(text="Logs🔔", url="t.me/Rental_Girlfriends_Logs"),
-                     ],
-                    [                  
-                       InlineKeyboardButton(
-                             text="Support🚑",
-                             url=f"https://t.me/Black_Knights_Union_Support"),
-                       InlineKeyboardButton(
-                             text="Updates🛰️",
-                             url="https://t.me/Black_Knights_Union"),
-                       InlineKeyboardButton(text="Network📊", url="https://t.me/Yuki_Network")
-                     ], 
-    ]
+        InlineKeyboardButton(
+            text="Add Me to your groups🎉",
+            url="t.me/NekoXRobot?startgroup=true",
+        ),
+    ],
+    [
+        InlineKeyboardButton(text="Help🔐", callback_data="help_back"),
+        InlineKeyboardButton(
+            text="Bot Support🎊", url="https://t.me/NekoXsupport"
+        ),
+        InlineKeyboardButton(text="Logs🔔", url="t.me/Rental_Girlfriends_Logs"),
+    ],
+    [
+        InlineKeyboardButton(
+            text="Support🚑", url="https://t.me/Black_Knights_Union_Support"
+        ),
+        InlineKeyboardButton(
+            text="Updates🛰️", url="https://t.me/Black_Knights_Union"
+        ),
+        InlineKeyboardButton(text="Network📊", url="https://t.me/Yuki_Network"),
+    ],
+]
 
-                    
+
+
 HELP_STRINGS = """
 *{} is here! 
 I Use My Powers To Help Admins To Manage Their Groups! 
@@ -96,8 +97,12 @@ I Use My Powers To Help Admins To Manage Their Groups!
    • in a group: will redirect you to pm, with all that chat's settings.
 For all command use /* [or](https://telegra.ph/file/2866d7d3378cdad7b43ff.jpg) *!* 
 """.format(
-    dispatcher.bot.first_name, ""
-    if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\nKindly use ! for commands if / is not working\n")
+    dispatcher.bot.first_name,
+    "\nAll commands can either be used with / or !.\nKindly use ! for commands if / is not working\n"
+    if ALLOW_EXCL
+    else "",
+)
+
 
 GROUP_HELP_IMG = "https://telegra.ph/file/3bf1c58be585793e354ca.jpg"
 NEKO_IMG = "https://telegra.ph/file/6c6de4d3cc229b71a66cf.mp4"
@@ -121,7 +126,7 @@ for module_name in ALL_MODULES:
     if not hasattr(imported_module, "__mod_name__"):
         imported_module.__mod_name__ = imported_module.__name__
 
-    if not imported_module.__mod_name__.lower() in IMPORTED:
+    if imported_module.__mod_name__.lower() not in IMPORTED:
         IMPORTED[imported_module.__mod_name__.lower()] = imported_module
     else:
         raise Exception(
@@ -224,7 +229,8 @@ def start(update: Update, context: CallbackContext):
             )
     else:
         update.effective_message.reply_video(
-                NEKO_IMG, caption=f"Neko!!!!\nI'm here with my Love")
+            NEKO_IMG, caption="Neko!!!!\\nI'm here with my Love"
+        )
 
 # for test purposes
 def error_callback(update: Update, context: CallbackContext):
@@ -404,21 +410,20 @@ def send_settings(chat_id, user_id, user=False):
                 "Seems like there aren't any user specific settings available :'(",
                 parse_mode=ParseMode.MARKDOWN)
 
+    elif CHAT_SETTINGS:
+        chat_name = dispatcher.bot.getChat(chat_id).title
+        dispatcher.bot.send_message(
+            user_id,
+            text="Which module would you like to check {}'s settings for?"
+            .format(chat_name),
+            reply_markup=InlineKeyboardMarkup(
+                paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id)))
     else:
-        if CHAT_SETTINGS:
-            chat_name = dispatcher.bot.getChat(chat_id).title
-            dispatcher.bot.send_message(
-                user_id,
-                text="Which module would you like to check {}'s settings for?"
-                .format(chat_name),
-                reply_markup=InlineKeyboardMarkup(
-                    paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id)))
-        else:
-            dispatcher.bot.send_message(
-                user_id,
-                "Seems like there aren't any chat settings available :'(\nSend this "
-                "in a group chat you're admin in to find its current settings!",
-                parse_mode=ParseMode.MARKDOWN)
+        dispatcher.bot.send_message(
+            user_id,
+            "Seems like there aren't any chat settings available :'(\nSend this "
+            "in a group chat you're admin in to find its current settings!",
+            parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
@@ -483,13 +488,11 @@ def settings_button(update: Update, context: CallbackContext):
         bot.answer_callback_query(query.id)
         query.message.delete()
     except BadRequest as excp:
-        if excp.message == "Message is not modified":
-            pass
-        elif excp.message == "Query_id_invalid":
-            pass
-        elif excp.message == "Message can't be deleted":
-            pass
-        else:
+        if excp.message not in [
+            "Message is not modified",
+            "Query_id_invalid",
+            "Message can't be deleted",
+        ]:
             LOGGER.exception("Exception in settings buttons. %s",
                              str(query.data))
 
@@ -501,22 +504,21 @@ def get_settings(update: Update, context: CallbackContext):
     msg = update.effective_message  # type: Optional[Message]
 
     # ONLY send settings in PM
-    if chat.type != chat.PRIVATE:
-        if is_user_admin(chat, user.id):
-            text = "Click here to get this chat's settings, as well as yours."
-            msg.reply_text(
-                text,
-                reply_markup=InlineKeyboardMarkup([[
-                    InlineKeyboardButton(
-                        text="Settings",
-                        url="t.me/{}?start=stngs_{}".format(
-                            context.bot.username, chat.id))
-                ]]))
-        else:
-            text = "Click here to check your settings."
-
-    else:
+    if chat.type == chat.PRIVATE:
         send_settings(chat.id, user.id, True)
+
+    elif is_user_admin(chat, user.id):
+        text = "Click here to get this chat's settings, as well as yours."
+        msg.reply_text(
+            text,
+            reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton(
+                    text="Settings",
+                    url="t.me/{}?start=stngs_{}".format(
+                        context.bot.username, chat.id))
+            ]]))
+    else:
+        text = "Click here to check your settings."
 
 
 @run_async
@@ -623,16 +625,16 @@ def main():
         LOGGER.info("Using long polling.")
         updater.start_polling(timeout=15, read_latency=4, clean=True)
 
-    if len(argv) not in (1, 3, 4):
-        telethn.disconnect()
-    else:
+    if len(argv) in {1, 3, 4}:
         telethn.run_until_disconnected()
 
+    else:
+        telethn.disconnect()
     updater.idle()
 
 
 if __name__ == '__main__':
-    LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
+    LOGGER.info(f"Successfully loaded modules: {str(ALL_MODULES)}")
     telethn.start(bot_token=TOKEN)
     pbot.start()
     main()

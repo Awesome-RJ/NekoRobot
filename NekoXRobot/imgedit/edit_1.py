@@ -33,7 +33,7 @@ async def bright(client, message):
         except Exception:
             pass
     except Exception as e:
-        print("bright-error - " + str(e))
+        print(f"bright-error - {str(e)}")
         if "USER_IS_BLOCKED" in str(e):
             return
         try:
@@ -73,7 +73,7 @@ async def mix(client, message):
         except Exception:
             pass
     except Exception as e:
-        print("mix-error - " + str(e))
+        print(f"mix-error - {str(e)}")
         if "USER_IS_BLOCKED" in str(e):
             return
         try:
@@ -112,7 +112,7 @@ async def black_white(client, message):
         except Exception:
             pass
     except Exception as e:
-        print("black_white-error - " + str(e))
+        print(f"black_white-error - {str(e)}")
         if "USER_IS_BLOCKED" in str(e):
             return
         try:
@@ -151,7 +151,7 @@ async def normal_blur(client, message):
         except Exception:
             pass
     except Exception as e:
-        print("normal_blur-error - " + str(e))
+        print(f"normal_blur-error - {str(e)}")
         if "USER_IS_BLOCKED" in str(e):
             return
         try:
@@ -190,7 +190,7 @@ async def g_blur(client, message):
         except Exception:
             pass
     except Exception as e:
-        print("g_blur-error - " + str(e))
+        print(f"g_blur-error - {str(e)}")
         if "USER_IS_BLOCKED" in str(e):
             return
         try:
@@ -229,7 +229,7 @@ async def box_blur(client, message):
         except Exception:
             pass
     except Exception as e:
-        print("box_blur-error - " + str(e))
+        print(f"box_blur-error - {str(e)}")
         if "USER_IS_BLOCKED" in str(e):
             return
         try:

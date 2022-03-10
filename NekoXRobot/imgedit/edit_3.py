@@ -32,7 +32,7 @@ async def black_border(client, message):
         except Exception:
             pass
     except Exception as e:
-        print("black_border-error - " + str(e))
+        print(f"black_border-error - {str(e)}")
         if "USER_IS_BLOCKED" in str(e):
             return
         try:
@@ -71,7 +71,7 @@ async def green_border(client, message):
         except Exception:
             pass
     except Exception as e:
-        print("green_border-error - " + str(e))
+        print(f"green_border-error - {str(e)}")
         if "USER_IS_BLOCKED" in str(e):
             return
         try:
@@ -110,7 +110,7 @@ async def blue_border(client, message):
         except Exception:
             pass
     except Exception as e:
-        print("blue_border-error - " + str(e))
+        print(f"blue_border-error - {str(e)}")
         if "USER_IS_BLOCKED" in str(e):
             return
         try:
@@ -149,7 +149,7 @@ async def red_border(client, message):
         except Exception:
             pass
     except Exception as e:
-        print("red_border-error - " + str(e))
+        print(f"red_border-error - {str(e)}")
         if "USER_IS_BLOCKED" in str(e):
             return
         try:
